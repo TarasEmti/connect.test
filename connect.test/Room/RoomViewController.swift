@@ -10,10 +10,11 @@ import UIKit
 
 class RoomViewController: UIViewController {
 
+    private lazy var
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        view.backgroundColor = UIColor.green
     }
-
-
 }
