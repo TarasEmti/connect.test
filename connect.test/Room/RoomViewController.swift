@@ -36,6 +36,8 @@ class RoomViewController: UIViewController {
         view.backgroundColor = self.view.backgroundColor
         view.maximumZoomScale = 8.0
         view.zoomScale = 3.0
+        view.delegate = self
+        view.contentSize = UIScreen.main.bounds.size
 
         return view
     }()
@@ -50,9 +52,7 @@ class RoomViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .background
-        
-        scrollView.delegate = self
-        scrollView.contentSize = UIScreen.main.bounds.size
+
         scrollView.addSubview(roomSceneView)
         view.addSubview(scrollView)
 

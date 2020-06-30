@@ -11,6 +11,7 @@ import SpriteKit
 final class RoomScene: SKScene {
 
     let backgroundImageName: String
+    var userNode: SKNode!
 
     init(backgroundImageName: String) {
         self.backgroundImageName = backgroundImageName
@@ -27,6 +28,14 @@ final class RoomScene: SKScene {
 
     override func didMove(to view: SKView) {
         initializeBackground(imageName: backgroundImageName)
+        addUserNode()
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: self)
+            userNode.position = location
+        }
     }
 
     private func initializeBackground(imageName: String) {
@@ -48,6 +57,7 @@ extension RoomScene: RoomSceneInteractive {
         let userNode = SKShapeNode(circleOfRadius: 40)
         userNode.fillColor = .red
         userNode.position = .zero
+        self.userNode = userNode
         addChild(userNode)
     }
 
