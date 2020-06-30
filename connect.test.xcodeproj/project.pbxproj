@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		76008F7824ABBB1B00B858F5 /* RoomScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F7724ABBB1B00B858F5 /* RoomScene.swift */; };
+		76008F7A24ABBB4B00B858F5 /* RoomSceneInteractive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F7924ABBB4B00B858F5 /* RoomSceneInteractive.swift */; };
+		76008F7C24ABBF5600B858F5 /* RoomBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F7B24ABBF5600B858F5 /* RoomBackground.swift */; };
+		76008F7E24ABC07200B858F5 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F7D24ABC07200B858F5 /* UIColor+Ext.swift */; };
 		762D9D4824AA7C7100EF9D8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762D9D4724AA7C7100EF9D8E /* AppDelegate.swift */; };
 		762D9D4A24AA7C7100EF9D8E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762D9D4924AA7C7100EF9D8E /* SceneDelegate.swift */; };
 		762D9D5124AA7C7400EF9D8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 762D9D5024AA7C7400EF9D8E /* Assets.xcassets */; };
@@ -34,6 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		76008F7724ABBB1B00B858F5 /* RoomScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomScene.swift; sourceTree = "<group>"; };
+		76008F7924ABBB4B00B858F5 /* RoomSceneInteractive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneInteractive.swift; sourceTree = "<group>"; };
+		76008F7B24ABBF5600B858F5 /* RoomBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomBackground.swift; sourceTree = "<group>"; };
+		76008F7D24ABC07200B858F5 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		762D9D4424AA7C7100EF9D8E /* connect.test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = connect.test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		762D9D4724AA7C7100EF9D8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		762D9D4924AA7C7100EF9D8E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +137,7 @@
 		768EDF8724AA8B5500CAE740 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				76008F7D24ABC07200B858F5 /* UIColor+Ext.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -137,6 +146,9 @@
 			isa = PBXGroup;
 			children = (
 				768EDF8524AA8B3B00CAE740 /* RoomViewController.swift */,
+				76008F7724ABBB1B00B858F5 /* RoomScene.swift */,
+				76008F7924ABBB4B00B858F5 /* RoomSceneInteractive.swift */,
+				76008F7B24ABBF5600B858F5 /* RoomBackground.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -271,7 +283,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76008F7E24ABC07200B858F5 /* UIColor+Ext.swift in Sources */,
+				76008F7C24ABBF5600B858F5 /* RoomBackground.swift in Sources */,
 				762D9D4824AA7C7100EF9D8E /* AppDelegate.swift in Sources */,
+				76008F7824ABBB1B00B858F5 /* RoomScene.swift in Sources */,
+				76008F7A24ABBB4B00B858F5 /* RoomSceneInteractive.swift in Sources */,
 				762D9D4A24AA7C7100EF9D8E /* SceneDelegate.swift in Sources */,
 				768EDF8624AA8B3B00CAE740 /* RoomViewController.swift in Sources */,
 			);

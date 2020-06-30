@@ -9,13 +9,23 @@
 import UIKit
 import SpriteKit
 
+final class RoomSceneFactory {
+    func buildRoomScene(background: RoomBackground) -> RoomSceneInteractive {
+        let scene = RoomScene(backgroundImageName: background.rawValue)
+
+        return scene
+    }
+}
+
 class RoomViewController: UIViewController {
+
+    // MARK: - Subviews
 
     private lazy var roomSceneView: SKView = {
         let view = SKView()
         view.showsFPS = true
         view.showsNodeCount = true
-        view.backgroundColor = UIColor.red
+        view.backgroundColor = self.view.backgroundColor
         view.ignoresSiblingOrder = true
 
         return view
@@ -23,30 +33,33 @@ class RoomViewController: UIViewController {
 
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
-        view.backgroundColor = .yellow
-        view.maximumZoomScale = 8
-        view.minimumZoomScale = 1.0
-        view.bouncesZoom = true
+        view.backgroundColor = self.view.backgroundColor
+        view.maximumZoomScale = 8.0
         view.zoomScale = 3.0
-        view.bounces = true
 
         return view
     }()
 
+    // MARK: - Properties
+
+    private let roomFactory = RoomSceneFactory()
+
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(scrollView)
+        view.backgroundColor = .background
+        
         scrollView.delegate = self
-        scrollView.addSubview(roomSceneView)
-
-        let roomScene = RoomScene(size: CGSize(width: 1125, height: 2436))
         scrollView.contentSize = UIScreen.main.bounds.size
-        roomSceneView.presentScene(roomScene)
+        scrollView.addSubview(roomSceneView)
+        view.addSubview(scrollView)
 
-        roomScene.scaleMode = .aspectFit
-        roomScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        presentRoom()
     }
+
+    // MARK: - Layout
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -54,28 +67,18 @@ class RoomViewController: UIViewController {
         scrollView.frame = view.bounds
         roomSceneView.frame = scrollView.bounds
     }
+
+    // MARK: - Private methods
+
+    private func presentRoom() {
+        let room = roomFactory.buildRoomScene(background: .office)
+        roomSceneView.presentScene(room as? SKScene)
+    }
 }
 
 extension RoomViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return roomSceneView
-    }
-}
-
-final class RoomScene: SKScene {
-    override func didMove(to view: SKView) {
-        let background = SKSpriteNode(imageNamed: "office_cover")
-        background.position = .zero
-        background.zPosition = -1
-        let backgroundScale = size.height / background.size.height
-        background.xScale = backgroundScale
-        background.yScale = backgroundScale
-        addChild(background)
-
-        let userNode = SKShapeNode(circleOfRadius: 40)
-        userNode.fillColor = .red
-        userNode.position = .zero
-        addChild(userNode)
     }
 }
 
