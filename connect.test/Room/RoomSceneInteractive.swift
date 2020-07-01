@@ -9,8 +9,12 @@
 import UIKit
 
 protocol RoomSceneInteractive {
-    func addUserNode()
+    var roomDelegate: RoomSceneDelegate? { get set }
+
+    func addUserNode(info: RoomMember)
     func addPersonNode(info: RoomMember)
+    func removePersonNode(info: RoomMember)
+    
     func canMove(to point: CGPoint) -> Bool
     func move(to point: CGPoint)
 }

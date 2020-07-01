@@ -11,6 +11,16 @@
 		76008F7A24ABBB4B00B858F5 /* RoomSceneInteractive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F7924ABBB4B00B858F5 /* RoomSceneInteractive.swift */; };
 		76008F7C24ABBF5600B858F5 /* RoomBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F7B24ABBF5600B858F5 /* RoomBackground.swift */; };
 		76008F7E24ABC07200B858F5 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F7D24ABC07200B858F5 /* UIColor+Ext.swift */; };
+		76008F8124ACD9AE00B858F5 /* UserNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8024ACD9AE00B858F5 /* UserNode.swift */; };
+		76008F8324ACD9C400B858F5 /* PersonNodeIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8224ACD9C400B858F5 /* PersonNodeIdentifiable.swift */; };
+		76008F8524ACDA0B00B858F5 /* RoomMemberNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8424ACDA0B00B858F5 /* RoomMemberNode.swift */; };
+		76008F8724ACDA5300B858F5 /* RoomSceneLayoutConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8624ACDA5300B858F5 /* RoomSceneLayoutConstants.swift */; };
+		76008F8924ACDAC500B858F5 /* RoomSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8824ACDAC500B858F5 /* RoomSceneDelegate.swift */; };
+		76008F8C24ACEE3300B858F5 /* UserRoomMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8B24ACEE3300B858F5 /* UserRoomMember.swift */; };
+		76008F8E24ACEE8900B858F5 /* OtherRoomMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8D24ACEE8900B858F5 /* OtherRoomMember.swift */; };
+		76008F9024ACEEA900B858F5 /* RoomMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8F24ACEEA900B858F5 /* RoomMember.swift */; };
+		76008F9324ACEEEB00B858F5 /* CameraLayerRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F9224ACEEEB00B858F5 /* CameraLayerRenderer.swift */; };
+		76008F9524ACF7A700B858F5 /* BasePersonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F9424ACF7A700B858F5 /* BasePersonNode.swift */; };
 		762D9D4824AA7C7100EF9D8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762D9D4724AA7C7100EF9D8E /* AppDelegate.swift */; };
 		762D9D4A24AA7C7100EF9D8E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762D9D4924AA7C7100EF9D8E /* SceneDelegate.swift */; };
 		762D9D5124AA7C7400EF9D8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 762D9D5024AA7C7400EF9D8E /* Assets.xcassets */; };
@@ -42,6 +52,16 @@
 		76008F7924ABBB4B00B858F5 /* RoomSceneInteractive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneInteractive.swift; sourceTree = "<group>"; };
 		76008F7B24ABBF5600B858F5 /* RoomBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomBackground.swift; sourceTree = "<group>"; };
 		76008F7D24ABC07200B858F5 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		76008F8024ACD9AE00B858F5 /* UserNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNode.swift; sourceTree = "<group>"; };
+		76008F8224ACD9C400B858F5 /* PersonNodeIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonNodeIdentifiable.swift; sourceTree = "<group>"; };
+		76008F8424ACDA0B00B858F5 /* RoomMemberNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMemberNode.swift; sourceTree = "<group>"; };
+		76008F8624ACDA5300B858F5 /* RoomSceneLayoutConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneLayoutConstants.swift; sourceTree = "<group>"; };
+		76008F8824ACDAC500B858F5 /* RoomSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneDelegate.swift; sourceTree = "<group>"; };
+		76008F8B24ACEE3300B858F5 /* UserRoomMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRoomMember.swift; sourceTree = "<group>"; };
+		76008F8D24ACEE8900B858F5 /* OtherRoomMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherRoomMember.swift; sourceTree = "<group>"; };
+		76008F8F24ACEEA900B858F5 /* RoomMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMember.swift; sourceTree = "<group>"; };
+		76008F9224ACEEEB00B858F5 /* CameraLayerRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraLayerRenderer.swift; sourceTree = "<group>"; };
+		76008F9424ACF7A700B858F5 /* BasePersonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePersonNode.swift; sourceTree = "<group>"; };
 		762D9D4424AA7C7100EF9D8E /* connect.test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = connect.test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		762D9D4724AA7C7100EF9D8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		762D9D4924AA7C7100EF9D8E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +102,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		76008F7F24ACD98B00B858F5 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				76008F8024ACD9AE00B858F5 /* UserNode.swift */,
+				76008F8224ACD9C400B858F5 /* PersonNodeIdentifiable.swift */,
+				76008F8424ACDA0B00B858F5 /* RoomMemberNode.swift */,
+				76008F9424ACF7A700B858F5 /* BasePersonNode.swift */,
+			);
+			path = Nodes;
+			sourceTree = "<group>";
+		};
+		76008F8A24ACED2F00B858F5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				76008F8B24ACEE3300B858F5 /* UserRoomMember.swift */,
+				76008F8D24ACEE8900B858F5 /* OtherRoomMember.swift */,
+				76008F8F24ACEEA900B858F5 /* RoomMember.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		76008F9124ACEECC00B858F5 /* VideoStream */ = {
+			isa = PBXGroup;
+			children = (
+				76008F9224ACEEEB00B858F5 /* CameraLayerRenderer.swift */,
+			);
+			path = VideoStream;
+			sourceTree = "<group>";
+		};
 		762D9D3B24AA7C7100EF9D8E = {
 			isa = PBXGroup;
 			children = (
@@ -105,11 +154,13 @@
 		762D9D4624AA7C7100EF9D8E /* connect.test */ = {
 			isa = PBXGroup;
 			children = (
+				76008F9124ACEECC00B858F5 /* VideoStream */,
 				762D9D5024AA7C7400EF9D8E /* Assets.xcassets */,
 				762D9D5524AA7C7400EF9D8E /* Info.plist */,
 				762D9D5224AA7C7400EF9D8E /* LaunchScreen.storyboard */,
 				762D9D4724AA7C7100EF9D8E /* AppDelegate.swift */,
 				762D9D4924AA7C7100EF9D8E /* SceneDelegate.swift */,
+				76008F8A24ACED2F00B858F5 /* Models */,
 				768EDF8724AA8B5500CAE740 /* Resources */,
 				768EDF8824AA8B6A00CAE740 /* Room */,
 			);
@@ -145,10 +196,13 @@
 		768EDF8824AA8B6A00CAE740 /* Room */ = {
 			isa = PBXGroup;
 			children = (
+				76008F7F24ACD98B00B858F5 /* Nodes */,
 				768EDF8524AA8B3B00CAE740 /* RoomViewController.swift */,
 				76008F7724ABBB1B00B858F5 /* RoomScene.swift */,
 				76008F7924ABBB4B00B858F5 /* RoomSceneInteractive.swift */,
 				76008F7B24ABBF5600B858F5 /* RoomBackground.swift */,
+				76008F8624ACDA5300B858F5 /* RoomSceneLayoutConstants.swift */,
+				76008F8824ACDAC500B858F5 /* RoomSceneDelegate.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -284,11 +338,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				76008F7E24ABC07200B858F5 /* UIColor+Ext.swift in Sources */,
+				76008F9324ACEEEB00B858F5 /* CameraLayerRenderer.swift in Sources */,
+				76008F8E24ACEE8900B858F5 /* OtherRoomMember.swift in Sources */,
+				76008F9524ACF7A700B858F5 /* BasePersonNode.swift in Sources */,
 				76008F7C24ABBF5600B858F5 /* RoomBackground.swift in Sources */,
+				76008F8524ACDA0B00B858F5 /* RoomMemberNode.swift in Sources */,
+				76008F8C24ACEE3300B858F5 /* UserRoomMember.swift in Sources */,
 				762D9D4824AA7C7100EF9D8E /* AppDelegate.swift in Sources */,
 				76008F7824ABBB1B00B858F5 /* RoomScene.swift in Sources */,
+				76008F9024ACEEA900B858F5 /* RoomMember.swift in Sources */,
 				76008F7A24ABBB4B00B858F5 /* RoomSceneInteractive.swift in Sources */,
+				76008F8724ACDA5300B858F5 /* RoomSceneLayoutConstants.swift in Sources */,
 				762D9D4A24AA7C7100EF9D8E /* SceneDelegate.swift in Sources */,
+				76008F8924ACDAC500B858F5 /* RoomSceneDelegate.swift in Sources */,
+				76008F8324ACD9C400B858F5 /* PersonNodeIdentifiable.swift in Sources */,
+				76008F8124ACD9AE00B858F5 /* UserNode.swift in Sources */,
 				768EDF8624AA8B3B00CAE740 /* RoomViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,33 +8,13 @@
 
 import SpriteKit
 
-protocol RoomSceneDelegate: class {
-    func showUserCard()
-    func showPersonCard(uid: String)
-}
-
 final class RoomScene: SKScene {
-
-    enum NodePosition: Int {
-        case background = -1
-        case endNode
-        case user
-        case roomMember
-
-        var zPosition: CGFloat {
-            return CGFloat(self.rawValue)
-        }
-    }
 
     weak var roomDelegate: RoomSceneDelegate?
 
     private let backgroundImageName: String
 
-    private lazy var userNode: SKNode = {
-        let node = UserNode()
-
-        return node
-    }()
+    private var userNode: SKNode!
 
     private var userSpeed: Double {
         // Lets suppose we use movement speed equals to
@@ -44,7 +24,7 @@ final class RoomScene: SKScene {
 
     init(backgroundImageName: String) {
         self.backgroundImageName = backgroundImageName
-        super.init(size: Layout.sceneSize)
+        super.init(size: RoomSceneLayoutConstants.sceneSize)
 
         scaleMode = .aspectFit
         anchorPoint = CGPoint(x: 0.0, y: 0.5)
@@ -57,7 +37,6 @@ final class RoomScene: SKScene {
 
     override func didMove(to view: SKView) {
         initializeBackground(imageName: backgroundImageName)
-        addUserNode()
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -70,6 +49,10 @@ final class RoomScene: SKScene {
                     roomDelegate?.showUserCard()
                     
                     return
+                } else if node.name == RoomMemberNode.nodeName {
+                    roomDelegate?.showPersonCard(uid: (node.parent as! PersonNodeIdentifiable).uid)
+
+                    return
                 }
             }
             if canMove(to: touchLocation) {
@@ -79,7 +62,6 @@ final class RoomScene: SKScene {
     }
 
     private func initializeBackground(imageName: String) {
-
         let background = SKSpriteNode(imageNamed: imageName)
         background.position = .zero
         background.zPosition = NodePosition.background.zPosition
@@ -101,13 +83,13 @@ final class RoomScene: SKScene {
     }
 
     private func endPointNode() -> SKNode {
-        let node = SKShapeNode(circleOfRadius: Layout.personNodeRadius)
+        let node = SKShapeNode(circleOfRadius: RoomSceneLayoutConstants.personNodeRadius)
         node.fillColor = .clear
         node.lineWidth = 3.0
         node.strokeColor = .white
         node.zPosition = NodePosition.endNode.zPosition
 
-        let centreDot = SKShapeNode(circleOfRadius: Layout.personNodeRadius / 10)
+        let centreDot = SKShapeNode(circleOfRadius: RoomSceneLayoutConstants.personNodeRadius / 10)
         centreDot.fillColor = .white
 
         node.addChild(centreDot)
@@ -123,8 +105,8 @@ final class RoomScene: SKScene {
     private func findSpawnLocation() -> CGPoint {
 
         // Assume we spawn new members only on upper half of scene
-        let pointX = arc4random() % UInt32((Layout.sceneSize.width - Layout.personNodeRadius))
-        let pointY = arc4random() % UInt32((Layout.sceneSize.height / 2 - Layout.personNodeRadius))
+        let pointX = arc4random() % UInt32((RoomSceneLayoutConstants.sceneSize.width - RoomSceneLayoutConstants.personNodeRadius))
+        let pointY = arc4random() % UInt32((RoomSceneLayoutConstants.sceneSize.height / 2 - RoomSceneLayoutConstants.personNodeRadius))
 
         // warning: Logic to check if spawn place us possible
 
@@ -132,11 +114,26 @@ final class RoomScene: SKScene {
     }
 }
 
+extension RoomScene {
+    private enum NodePosition: Int {
+        case background = -1
+        case endNode
+        case user
+        case roomMember
+
+        var zPosition: CGFloat {
+            return CGFloat(self.rawValue)
+        }
+    }
+}
+
 extension RoomScene: RoomSceneInteractive {
-    func addUserNode() {
-        userNode.position = findSpawnLocation()
-        userNode.zPosition = NodePosition.user.zPosition
-        addChild(userNode)
+    func addUserNode(info: RoomMember) {
+        let node = UserNode(info: info)
+        node.position = findSpawnLocation()
+        node.zPosition = NodePosition.user.zPosition
+        self.userNode = node
+        addChild(node)
     }
 
     func addPersonNode(info: RoomMember) {
@@ -144,6 +141,18 @@ extension RoomScene: RoomSceneInteractive {
         node.zPosition = NodePosition.roomMember.zPosition
         node.position = findSpawnLocation()
         addChild(node)
+    }
+
+    func removePersonNode(info: RoomMember) {
+        enumerateChildNodes(withName: RoomMemberNode.nodeName) { (node, pointer) in
+            guard
+                let idNode = node as? PersonNodeIdentifiable,
+                idNode.uid == info.uid else {
+                return
+            }
+            node.removeAllActions()
+            node.removeFromParent()
+        }
     }
 
     func canMove(to point: CGPoint) -> Bool {
@@ -171,102 +180,4 @@ private extension CGPoint {
 
         return CGFloat(distance)
     }
-}
-
-
-final class UserNode: SKNode {
-
-    override init() {
-        super.init()
-
-        addChild(hearingZoneNode())
-        addChild(avatarCircle())
-    }
-
-    private func avatarCircle() -> SKNode {
-        let circle = SKShapeNode(circleOfRadius: Layout.personNodeRadius)
-        circle.name = "User"
-        circle.strokeColor = .blue
-        circle.fillColor = .red
-
-        return circle
-    }
-
-    private func hearingZoneNode() -> SKNode {
-        let circle = SKShapeNode(circleOfRadius: Layout.audioSharingRadius)
-        circle.name = "Audio zone"
-        circle.fillColor = UIColor.white.withAlphaComponent(0.3)
-        circle.strokeColor = .clear
-
-        return circle
-    }
-
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension UserNode: PersonNodeIdentifiable {
-
-    static let nodeName = "User"
-
-    var uid: String {
-        return "0"
-    }
-}
-
-protocol PersonNodeIdentifiable {
-    static var nodeName: String { get }
-    var uid: String { get }
-}
-
-final class RoomMemberNode: SKNode {
-
-    private let memberInfo: RoomMember
-
-    init(info: RoomMember) {
-        self.memberInfo = info
-        super.init()
-
-        addChild(avatarCircle())
-    }
-
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func avatarCircle() -> SKNode {
-        let circle = SKShapeNode(circleOfRadius: Layout.personNodeRadius)
-        circle.name = RoomMemberNode.nodeName
-        circle.strokeColor = .blue
-        circle.fillColor = .red
-
-        if let image = memberInfo.icon {
-            let texture = SKTexture(image: image)
-            let imageNode = SKSpriteNode(texture: texture)
-            addChild(imageNode)
-        } else {
-            let labelNode = SKLabelNode(text: memberInfo.name)
-            addChild(labelNode)
-        }
-
-        return circle
-    }
-}
-
-extension RoomMemberNode: PersonNodeIdentifiable {
-    static let nodeName: String = "Room Member"
-
-    var uid: String {
-        return memberInfo.uid
-    }
-}
-
-
-struct Layout {
-    static let personNodeRadius: CGFloat = 40
-    static let audioSharingRadius: CGFloat = 160
-    static let sceneSize = CGSize(width: 1125, height: 2436)
 }
