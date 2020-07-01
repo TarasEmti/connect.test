@@ -76,8 +76,10 @@ final class RoomScene: SKScene {
     }
 
     private func moveAction(of node: SKNode, speed: Double, to point: CGPoint) -> SKAction {
-        let distance = node.position.distance(to: point)
-        let animationTime = TimeInterval(distance / CGFloat(speed))
+
+        // Option of realisation with node constant speed instead of constant time
+//        let distance = node.position.distance(to: point)
+//        let animationTime = TimeInterval(distance / CGFloat(speed))
         let moveAction = SKAction.move(to: point, duration: 2)
         moveAction.timingMode = .easeInEaseOut
 
@@ -110,7 +112,7 @@ final class RoomScene: SKScene {
         let pointX = arc4random() % UInt32((RoomSceneLayoutConstants.sceneSize.width - RoomSceneLayoutConstants.personNodeRadius))
         let pointY = arc4random() % UInt32((RoomSceneLayoutConstants.sceneSize.height / 2 - RoomSceneLayoutConstants.personNodeRadius))
 
-        // warning: Logic to check if spawn place us possible
+        // Can add some logic to check if spawn place us available (no crossing)
 
         return CGPoint(x: CGFloat(pointX), y: CGFloat(pointY))
     }
