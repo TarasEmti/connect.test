@@ -23,7 +23,7 @@ final class UserNode: BasePersonNode {
         super.init()
 
         let audioZone = hearingZoneNode()
-        audioZone.zPosition = -2
+        audioZone.zPosition = -1
         addChild(audioZone)
 
         let userAudioCircle = SKShapeNode(circleOfRadius: RoomSceneLayoutConstants.personNodeRadius + 3)
