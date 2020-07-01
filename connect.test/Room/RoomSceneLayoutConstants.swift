@@ -11,5 +11,5 @@ import UIKit
 struct RoomSceneLayoutConstants {
     static let personNodeRadius: CGFloat = 40
     static let audioSharingRadius: CGFloat = 160
-    static let sceneSize = CGSize(width: 1125, height: 2436)
+    static let sceneSize = CGSize(width: 700, height: 1515)
 }

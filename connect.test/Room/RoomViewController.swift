@@ -34,10 +34,9 @@ final class RoomViewController: UIViewController {
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.backgroundColor = self.view.backgroundColor
-        view.maximumZoomScale = 8.0
-        view.zoomScale = 3.0
+        view.maximumZoomScale = 2
         view.delegate = self
-        view.contentSize = UIScreen.main.bounds.size
+        view.contentSize = RoomSceneLayoutConstants.sceneSize
 
         return view
     }()
@@ -100,7 +99,8 @@ final class RoomViewController: UIViewController {
         super.viewDidLayoutSubviews()
 
         scrollView.frame = view.bounds
-        roomSceneView.frame = scrollView.bounds
+        scrollView.minimumZoomScale = view.bounds.height / scrollView.contentSize.height
+        roomSceneView.frame = CGRect(origin: .zero, size: scrollView.contentSize)
 
 //        cameraView.frame = CGRect(origin: .zero, size: CGSize(width: 200, height: 200))
 //        cameraView.layer.cornerRadius = 100
