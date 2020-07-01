@@ -33,10 +33,10 @@ final class RoomScene: SKScene {
 
     init(backgroundImageName: String) {
         self.backgroundImageName = backgroundImageName
-        super.init(size: CGSize(width: 1125, height: 2436))
+        super.init(size: Layout.sceneSize)
 
         scaleMode = .aspectFit
-        anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        anchorPoint = CGPoint(x: 0.0, y: 0.5)
     }
 
     @available(*, unavailable)
@@ -89,7 +89,7 @@ final class RoomScene: SKScene {
     }
 
     private func endPointNode() -> SKNode {
-        let node = SKShapeNode(circleOfRadius: 40)
+        let node = SKShapeNode(circleOfRadius: Layout.personNodeRadius)
         node.fillColor = .clear
         node.lineWidth = 3.0
         node.strokeColor = .white
@@ -107,16 +107,28 @@ final class RoomScene: SKScene {
     private func remove(node: SKNode) {
         node.removeFromParent()
     }
+
+    private func findSpawnLocation() -> CGPoint {
+
+        // Assume we spawn new members only on upper half of scene
+        let pointX = arc4random() % UInt32((Layout.sceneSize.width - Layout.personNodeRadius))
+        let pointY = arc4random() % UInt32((Layout.sceneSize.height / 2 - Layout.personNodeRadius))
+
+        // warning: Logic to check if spawn place us possible
+
+        return CGPoint(x: CGFloat(pointX), y: CGFloat(pointY))
+    }
 }
 
 extension RoomScene: RoomSceneInteractive {
     func addUserNode() {
+        userNode.position = findSpawnLocation()
         addChild(userNode)
     }
 
     func addPersonNode(info: RoomMember) {
         let node = RoomMemberNode(info: info)
-        node.position = CGPoint(x: size.width/4, y: size.width/4)
+        node.position = findSpawnLocation()
         addChild(node)
     }
 
@@ -158,7 +170,7 @@ final class UserNode: SKNode {
     }
 
     private func avatarCircle() -> SKNode {
-        let circle = SKShapeNode(circleOfRadius: 40)
+        let circle = SKShapeNode(circleOfRadius: Layout.personNodeRadius)
         circle.name = "User"
         circle.strokeColor = .blue
         circle.fillColor = .red
@@ -167,7 +179,7 @@ final class UserNode: SKNode {
     }
 
     private func hearingZoneNode() -> SKNode {
-        let circle = SKShapeNode(circleOfRadius: 160)
+        let circle = SKShapeNode(circleOfRadius: Layout.audioSharingRadius)
         circle.name = "Audio zone"
         circle.fillColor = UIColor.white.withAlphaComponent(0.3)
         circle.strokeColor = .clear
@@ -212,7 +224,7 @@ final class RoomMemberNode: SKNode {
     }
 
     private func avatarCircle() -> SKNode {
-        let circle = SKShapeNode(circleOfRadius: 40)
+        let circle = SKShapeNode(circleOfRadius: Layout.personNodeRadius)
         circle.name = RoomMemberNode.nodeName
         circle.strokeColor = .blue
         circle.fillColor = .red
@@ -236,4 +248,11 @@ extension RoomMemberNode: PersonNodeIdentifiable {
     var uid: String {
         return memberInfo.uid
     }
+}
+
+
+struct Layout {
+    static let personNodeRadius: CGFloat = 40
+    static let audioSharingRadius: CGFloat = 160
+    static let sceneSize = CGSize(width: 1125, height: 2436)
 }
