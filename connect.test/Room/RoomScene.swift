@@ -14,7 +14,7 @@ final class RoomScene: SKScene {
 
     private let backgroundImageName: String
 
-    private var userNode: SKNode!
+    private var userNode: UserNode!
 
     private var userSpeed: Double {
         // Lets suppose we use movement speed equals to
@@ -170,6 +170,8 @@ extension RoomScene: RoomSceneInteractive {
         let endNode = endPointNode()
         endNode.position = point
         addChild(endNode)
+
+        userNode.imitatePulse()
 
         userNode.run(action) {
             endNode.removeFromParent()

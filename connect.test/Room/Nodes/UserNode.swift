@@ -18,6 +18,14 @@ final class UserNode: BasePersonNode {
         return node
     }()
 
+    private lazy var pulseNode: SKNode = {
+        let pulseNode = SKShapeNode(circleOfRadius: RoomSceneLayoutConstants.personNodeRadius)
+        pulseNode.strokeColor = .clear
+        pulseNode.fillColor = UIColor.blue.withAlphaComponent(0.5)
+
+        return pulseNode
+    }()
+
     init(info: RoomMember) {
         self.memberInfo = info
         super.init()
@@ -43,6 +51,22 @@ final class UserNode: BasePersonNode {
         #else
         streamNode.startVideoStream()
         #endif
+    }
+
+    func imitatePulse() {
+        let targetNode = pulseNode.copy() as! SKNode
+        addChild(targetNode)
+
+        let scale = SKAction.scale(by: 1.4, duration: 0.4)
+        scale.timingMode = .easeInEaseOut
+        let wait = SKAction.wait(forDuration: 0.25)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.15)
+        let fadeSeq = SKAction.sequence([wait, fadeOut])
+        let pulseGroup = SKAction.group([scale, fadeSeq])
+
+        targetNode.run(pulseGroup) {
+            targetNode.removeFromParent()
+        }
     }
 
     private func hearingZoneNode() -> SKNode {
