@@ -56,38 +56,42 @@ extension CameraCaptureNode: AVCaptureVideoDataOutputSampleBufferDelegate {
             .transformed(by: rotate)
             .transformed(by: horizontalFlip)
 
-        if let parent = parent {
-            let parentSize = parent.frame.size
-            if ciimage.extent.size.width < ciimage.extent.size.height {
-                let scale = parentSize.width / ciimage.extent.size.width
-                size = CGSize(width: parentSize.width, height: ciimage.extent.size.height * scale)
-            } else {
-                let scale = parentSize.height / ciimage.extent.size.height
-                size = CGSize(width: ciimage.extent.size.width * scale, height: parentSize.height)
-            }
-        }
-
         let context = CIContext(options: nil)
         let cgImage = context.createCGImage(ciimage, from: ciimage.extent)!
-//
-//        let minSide = min(size.width, size.height)
-//        let newSize = CGSize(width: minSide, height: minSide)
-//        let cropRect = CGRect(x: 0,
-//                              y: 0,
-//                              width: newSize.width,
-//                              height: newSize.height)
-//        let croppedImage = cgImage.cropping(to: CGRect(origin: .zero,
-//                                                       size: newSize))!
-//        let uiImage = UIGraphicsImageRenderer(size: newSize).image { (_) in
-//            UIBezierPath(ovalIn: cropRect).addClip()
-//            UIImage(cgImage: croppedImage).draw(in: CGRect(origin: .zero,
-//                                                           size: newSize))
-//        }
 
+        let image = UIImage(cgImage: cgImage).circleMasked!
+
+        if let parent = parent {
+            let parentSize = parent.frame.size
+            if size != parentSize {
+                size = parentSize
+            }
+        }
         // App crashing if we apply texture assigning to property.
         // You should always use SKAction
-        let texture = SKTexture(cgImage: cgImage)
+        let texture = SKTexture(image: image)
         let updateAction = SKAction.setTexture(texture)
         run(updateAction)
+    }
+}
+
+private extension UIImage {
+    var isPortrait:  Bool    { size.height > size.width }
+    var isLandscape: Bool    { size.width > size.height }
+    var breadth:     CGFloat { min(size.width, size.height) }
+    var breadthSize: CGSize  { .init(width: breadth, height: breadth) }
+    var breadthRect: CGRect  { .init(origin: .zero, size: breadthSize) }
+    var circleMasked: UIImage? {
+        guard let cgImage = cgImage?
+            .cropping(to: .init(origin: .init(x: isLandscape ? ((size.width-size.height)/2).rounded(.down) : 0,
+                                              y: isPortrait  ? ((size.height-size.width)/2).rounded(.down) : 0),
+                                size: breadthSize)) else { return nil }
+        let format = imageRendererFormat
+        format.opaque = false
+        return UIGraphicsImageRenderer(size: breadthSize, format: format).image { _ in
+            UIBezierPath(ovalIn: breadthRect).addClip()
+            UIImage(cgImage: cgImage, scale: 1, orientation: imageOrientation)
+            .draw(in: .init(origin: .zero, size: breadthSize))
+        }
     }
 }
