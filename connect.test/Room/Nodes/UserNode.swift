@@ -33,7 +33,11 @@ final class UserNode: BasePersonNode {
         circleNodeName = UserNode.nodeName
         addToCircle(streamNode)
 
-        //streamNode.startVideoStream()
+        #if targetEnvironment(simulator)
+        print("Video capture on simulator unavailable")
+        #else
+        streamNode.startVideoStream()
+        #endif
     }
 
     private func hearingZoneNode() -> SKNode {

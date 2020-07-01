@@ -18,8 +18,8 @@ final class RoomScene: SKScene {
 
     private var userSpeed: Double {
         // Lets suppose we use movement speed equals to
-        // half scene height for 1 second
-        return Double(size.height) / 2
+        // half scene height for 2 seconds
+        return Double(size.height) / 4
     }
 
     init(backgroundImageName: String) {
@@ -78,7 +78,7 @@ final class RoomScene: SKScene {
     private func moveAction(of node: SKNode, speed: Double, to point: CGPoint) -> SKAction {
         let distance = node.position.distance(to: point)
         let animationTime = TimeInterval(distance / CGFloat(speed))
-        let moveAction = SKAction.move(to: point, duration: animationTime)
+        let moveAction = SKAction.move(to: point, duration: 2)
         moveAction.timingMode = .easeInEaseOut
 
         return moveAction

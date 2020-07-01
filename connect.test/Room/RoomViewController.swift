@@ -75,22 +75,12 @@ final class RoomViewController: UIViewController {
 
         view.backgroundColor = .background
 
+        scrollView.minimumZoomScale = view.bounds.height / scrollView.contentSize.height
         scrollView.addSubview(roomSceneView)
         view.addSubview(scrollView)
 
         presentRoom()
-
-        //view.addSubview(cameraView)
         view.addSubview(addMockUserButton)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-//        cameraRenderer.setupAVCapture()
-//        cameraView.layer.addSublayer(cameraRenderer.previewLayer)
-//        cameraRenderer.previewLayer.frame = cameraView.bounds
-//        cameraRenderer.startSession()
     }
 
     // MARK: - Layout
@@ -99,11 +89,7 @@ final class RoomViewController: UIViewController {
         super.viewDidLayoutSubviews()
 
         scrollView.frame = view.bounds
-        scrollView.minimumZoomScale = view.bounds.height / scrollView.contentSize.height
         roomSceneView.frame = CGRect(origin: .zero, size: scrollView.contentSize)
-
-//        cameraView.frame = CGRect(origin: .zero, size: CGSize(width: 200, height: 200))
-//        cameraView.layer.cornerRadius = 100
 
         let buttonSize = CGSize(width: 40, height: 40)
         let offsetX: CGFloat = 16
