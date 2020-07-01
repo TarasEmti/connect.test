@@ -17,7 +17,7 @@ final class RoomSceneFactory {
     }
 }
 
-class RoomViewController: UIViewController {
+final class RoomViewController: UIViewController {
 
     // MARK: - Subviews
 
@@ -50,11 +50,24 @@ class RoomViewController: UIViewController {
         return view
     }()
 
+    private lazy var addMockUserButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "add_room_member"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.tintColor = .white
+        button.clipsToBounds = true
+        button.imageEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
+        button.backgroundColor = UIColor.background.withAlphaComponent(0.7)
+        button.addTarget(self, action: #selector(addRoomMember), for: .touchUpInside)
+
+        return button
+    }()
+
     let renderer = CameraLayerRenderer()
 
     // MARK: - Properties
 
-    private let roomFactory = RoomSceneFactory()
+    private let roomScene = RoomSceneFactory().buildRoomScene(background: .office)
 
     // MARK: - Lifecycle
 
@@ -69,6 +82,7 @@ class RoomViewController: UIViewController {
         presentRoom()
 
         view.addSubview(cameraView)
+        view.addSubview(addMockUserButton)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -90,14 +104,27 @@ class RoomViewController: UIViewController {
 
         cameraView.frame = CGRect(origin: .zero, size: CGSize(width: 200, height: 200))
         cameraView.layer.cornerRadius = 100
-        cameraView.center = view.center
+
+        let buttonSize = CGSize(width: 40, height: 40)
+        let offsetX: CGFloat = 16
+        let offsetY: CGFloat = 16 + view.safeAreaInsets.bottom
+
+        addMockUserButton.frame = CGRect(x: view.bounds.width - offsetX - buttonSize.width,
+                                         y: view.bounds.height - offsetY - buttonSize.height,
+                                         width: buttonSize.width,
+                                         height: buttonSize.height)
+        addMockUserButton.layer.cornerRadius = buttonSize.height / 2
     }
 
     // MARK: - Private methods
 
     private func presentRoom() {
-        let room = roomFactory.buildRoomScene(background: .office)
-        roomSceneView.presentScene(room as? SKScene)
+        roomSceneView.presentScene(roomScene as? SKScene)
+    }
+
+    @objc private func addRoomMember() {
+        let newMember = MockRoomMember()
+        roomScene.addPersonNode(info: newMember)
     }
 }
 
@@ -196,5 +223,27 @@ final class CameraLayerRenderer: NSObject, AVCaptureVideoDataOutputSampleBufferD
 
     func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         print("what to do here?")
+    }
+}
+
+protocol RoomMember {
+    var name: String { get }
+    var icon: UIImage? { get }
+    var uid: String { get }
+}
+
+class MockRoomMember: RoomMember {
+
+    let name: String
+    let icon: UIImage?
+    let uid: String
+
+    init() {
+        name = "Fake Chat Member"
+        icon = nil
+
+        let letters = "abcdefghijklmnopqrstuvwxyz0123456789"
+        let uidLengh = 6
+        uid = String((0..<uidLengh).map { _ in letters.randomElement()! })
     }
 }

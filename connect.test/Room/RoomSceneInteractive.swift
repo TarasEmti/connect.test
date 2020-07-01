@@ -10,7 +10,7 @@ import UIKit
 
 protocol RoomSceneInteractive {
     func addUserNode()
-    func addPersonNode()
+    func addPersonNode(info: RoomMember)
     func canMove(to point: CGPoint) -> Bool
     func move(to point: CGPoint)
 }

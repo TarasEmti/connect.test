@@ -114,7 +114,11 @@ extension RoomScene: RoomSceneInteractive {
         addChild(userNode)
     }
 
-    func addPersonNode() {}
+    func addPersonNode(info: RoomMember) {
+        let node = RoomMemberNode(info: info)
+        node.position = CGPoint(x: size.width/4, y: size.width/4)
+        addChild(node)
+    }
 
     func canMove(to point: CGPoint) -> Bool {
         return !userNode.hasActions()
@@ -144,9 +148,7 @@ private extension CGPoint {
 }
 
 
-class UserNode: SKNode {
-
-    static let nodeName = "User"
+final class UserNode: SKNode {
 
     override init() {
         super.init()
@@ -176,5 +178,62 @@ class UserNode: SKNode {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension UserNode: PersonNodeIdentifiable {
+
+    static let nodeName = "User"
+
+    var uid: String {
+        return "0"
+    }
+}
+
+protocol PersonNodeIdentifiable {
+    static var nodeName: String { get }
+    var uid: String { get }
+}
+
+final class RoomMemberNode: SKNode {
+
+    private let memberInfo: RoomMember
+
+    init(info: RoomMember) {
+        self.memberInfo = info
+        super.init()
+
+        addChild(avatarCircle())
+    }
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func avatarCircle() -> SKNode {
+        let circle = SKShapeNode(circleOfRadius: 40)
+        circle.name = RoomMemberNode.nodeName
+        circle.strokeColor = .blue
+        circle.fillColor = .red
+
+        if let image = memberInfo.icon {
+            let texture = SKTexture(image: image)
+            let imageNode = SKSpriteNode(texture: texture)
+            addChild(imageNode)
+        } else {
+            let labelNode = SKLabelNode(text: memberInfo.name)
+            addChild(labelNode)
+        }
+
+        return circle
+    }
+}
+
+extension RoomMemberNode: PersonNodeIdentifiable {
+    static let nodeName: String = "Room Member"
+
+    var uid: String {
+        return memberInfo.uid
     }
 }
