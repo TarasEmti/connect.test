@@ -80,7 +80,7 @@ final class RoomScene: SKScene {
         // Option of realisation with node constant speed instead of constant time
 //        let distance = node.position.distance(to: point)
 //        let animationTime = TimeInterval(distance / CGFloat(speed))
-        let moveAction = SKAction.move(to: point, duration: 2)
+        let moveAction = SKAction.move(to: point, duration: 1.5)
         moveAction.timingMode = .easeInEaseOut
 
         return moveAction
@@ -134,7 +134,8 @@ extension RoomScene {
 extension RoomScene: RoomSceneInteractive {
     func addUserNode(info: RoomMember) {
         let node = UserNode(info: info)
-        node.position = findSpawnLocation()
+        node.position = CGPoint(x: RoomSceneLayoutConstants.personNodeRadius * 6,
+                                y: size.height / 2 - RoomSceneLayoutConstants.personNodeRadius * 6)
         node.zPosition = NodePosition.user.zPosition
         self.userNode = node
         addChild(node)
