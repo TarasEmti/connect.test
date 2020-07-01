@@ -15,6 +15,17 @@ protocol RoomSceneDelegate: class {
 
 final class RoomScene: SKScene {
 
+    enum NodePosition: Int {
+        case background = -1
+        case endNode
+        case user
+        case roomMember
+
+        var zPosition: CGFloat {
+            return CGFloat(self.rawValue)
+        }
+    }
+
     weak var roomDelegate: RoomSceneDelegate?
 
     private let backgroundImageName: String
@@ -71,7 +82,7 @@ final class RoomScene: SKScene {
 
         let background = SKSpriteNode(imageNamed: imageName)
         background.position = .zero
-        background.zPosition = -1
+        background.zPosition = NodePosition.background.zPosition
 
         let backgroundScale = size.height / background.size.height
         background.xScale = backgroundScale
@@ -84,6 +95,7 @@ final class RoomScene: SKScene {
         let distance = node.position.distance(to: point)
         let animationTime = TimeInterval(distance / CGFloat(speed))
         let moveAction = SKAction.move(to: point, duration: animationTime)
+        moveAction.timingMode = .easeInEaseOut
 
         return moveAction
     }
@@ -93,9 +105,9 @@ final class RoomScene: SKScene {
         node.fillColor = .clear
         node.lineWidth = 3.0
         node.strokeColor = .white
+        node.zPosition = NodePosition.endNode.zPosition
 
-
-        let centreDot = SKShapeNode(circleOfRadius: 5)
+        let centreDot = SKShapeNode(circleOfRadius: Layout.personNodeRadius / 10)
         centreDot.fillColor = .white
 
         node.addChild(centreDot)
@@ -123,11 +135,13 @@ final class RoomScene: SKScene {
 extension RoomScene: RoomSceneInteractive {
     func addUserNode() {
         userNode.position = findSpawnLocation()
+        userNode.zPosition = NodePosition.user.zPosition
         addChild(userNode)
     }
 
     func addPersonNode(info: RoomMember) {
         let node = RoomMemberNode(info: info)
+        node.zPosition = NodePosition.roomMember.zPosition
         node.position = findSpawnLocation()
         addChild(node)
     }
