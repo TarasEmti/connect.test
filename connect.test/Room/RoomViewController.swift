@@ -87,7 +87,3 @@ protocol PersonCircular {
     var audioSource: String? { get }
     var videoSource: String? { get }
 }
-
-final class UserCircular: SKNode {
-
-}

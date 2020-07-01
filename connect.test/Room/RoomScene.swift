@@ -8,16 +8,22 @@
 
 import SpriteKit
 
+protocol RoomSceneDelegate: class {
+    func showUserCard()
+    func showPersonCard(uid: String)
+}
+
 final class RoomScene: SKScene {
 
-    enum NodeName: String {
-        case user = "User"
-        case chatMember = "Chat Member"
-        case background = "Background"
-    }
+    weak var roomDelegate: RoomSceneDelegate?
 
     private let backgroundImageName: String
-    private var userNode: SKNode!
+
+    private lazy var userNode: SKNode = {
+        let node = UserNode()
+
+        return node
+    }()
 
     private var userSpeed: Double {
         // Lets suppose we use movement speed equals to
@@ -49,9 +55,10 @@ final class RoomScene: SKScene {
             let touchedNodes = nodes(at: touchLocation)
 
             for node in touchedNodes {
-                if node.name == NodeName.user.rawValue {
-
-                    break
+                if node.name == UserNode.nodeName {
+                    roomDelegate?.showUserCard()
+                    
+                    return
                 }
             }
             if canMove(to: touchLocation) {
@@ -104,11 +111,6 @@ final class RoomScene: SKScene {
 
 extension RoomScene: RoomSceneInteractive {
     func addUserNode() {
-        let userNode = SKShapeNode(circleOfRadius: 40)
-        userNode.fillColor = .red
-        userNode.position = .zero
-        userNode.name = NodeName.user.rawValue
-        self.userNode = userNode
         addChild(userNode)
     }
 
@@ -138,5 +140,41 @@ private extension CGPoint {
         let distance = sqrt(deltaX * deltaX + deltaY * deltaY)
 
         return CGFloat(distance)
+    }
+}
+
+
+class UserNode: SKNode {
+
+    static let nodeName = "User"
+
+    override init() {
+        super.init()
+
+        addChild(hearingZoneNode())
+        addChild(avatarCircle())
+    }
+
+    private func avatarCircle() -> SKNode {
+        let circle = SKShapeNode(circleOfRadius: 40)
+        circle.name = "User"
+        circle.strokeColor = .blue
+        circle.fillColor = .red
+
+        return circle
+    }
+
+    private func hearingZoneNode() -> SKNode {
+        let circle = SKShapeNode(circleOfRadius: 160)
+        circle.name = "Audio zone"
+        circle.fillColor = UIColor.white.withAlphaComponent(0.3)
+        circle.strokeColor = .clear
+
+        return circle
+    }
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
