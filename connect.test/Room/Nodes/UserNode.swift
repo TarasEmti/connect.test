@@ -23,8 +23,13 @@ final class UserNode: BasePersonNode {
         super.init()
 
         let audioZone = hearingZoneNode()
-        audioZone.zPosition = -1
+        audioZone.zPosition = -2
         addChild(audioZone)
+
+        let userAudioCircle = SKShapeNode(circleOfRadius: RoomSceneLayoutConstants.personNodeRadius + 3)
+        userAudioCircle.fillColor = .blue
+        userAudioCircle.strokeColor = .blue
+        addChild(userAudioCircle)
 
         if let image = info.icon {
             let node = buildNode(with: image)
