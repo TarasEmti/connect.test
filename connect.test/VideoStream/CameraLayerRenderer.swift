@@ -10,69 +10,43 @@ import AVKit
 
 final class CameraLayerRenderer: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
 
-    let session = AVCaptureSession()
-    var captureDevice: AVCaptureDevice!
-    var captureQueue: DispatchQueue!
-    var previewLayer: CALayer!
+    private let session = AVCaptureSession()
+    private var captureDevice: AVCaptureDevice!
+    private var captureQueue: DispatchQueue!
 
-    func checkPermission() {
-        switch AVCaptureDevice.authorizationStatus(for: .video) {
-        case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { (isGranted) in
-                if !isGranted {
-                    print("Show error with link to settings")
-                }
+    func setupSession(with delegate: AVCaptureVideoDataOutputSampleBufferDelegate) throws {
+        do {
+            captureDevice = try findFrontalCamera()
+            captureQueue = DispatchQueue(label: "Video_output")
+
+            // Capture Input
+            let input = try AVCaptureDeviceInput(device: captureDevice)
+            if session.canAddInput(input) {
+                session.addInput(input)
             }
-        case .denied, .restricted:
-            print("Show error with link to settings")
-        case .authorized:
-            break
-        @unknown default:
-            fatalError("handle new AVCaptureDevice authorisation status")
+
+            // Capture Output
+            let output = AVCaptureVideoDataOutput()
+            output.alwaysDiscardsLateVideoFrames = true
+            output.setSampleBufferDelegate(delegate, queue: captureQueue)
+            output.connection(with: .video)?.videoOrientation = .portrait
+            if session.canAddOutput(output) {
+                session.addOutput(output)
+            }
+        } catch {
+            throw error
         }
     }
 
-    func setupAVCapture() {
-
+    private func findFrontalCamera() throws -> AVCaptureDevice {
         session.sessionPreset = .medium
         let discovery = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera],
                                                          mediaType: .video,
                                                          position: .front)
         guard let frontalCamera: AVCaptureDevice = discovery.devices.first else {
-            assertionFailure("Device don't have frontal camera")
-            return
+            throw(CaptureError.deviceUnavailable)
         }
-        captureDevice = frontalCamera
-
-        setupSession()
-    }
-
-    func setupSession() {
-        do {
-            let input = try AVCaptureDeviceInput(device: captureDevice)
-
-            if session.canAddInput(input) {
-                session.addInput(input)
-            }
-
-            let output = AVCaptureVideoDataOutput()
-            output.alwaysDiscardsLateVideoFrames = true
-
-            captureQueue = DispatchQueue(label: "Video_output")
-            output.setSampleBufferDelegate(self, queue: captureQueue)
-
-            if session.canAddOutput(output) {
-                session.addOutput(output)
-            }
-            output.connection(with: .video)?.videoOrientation = .portrait
-
-            let layer = AVCaptureVideoPreviewLayer(session: session)
-            layer.videoGravity = .resizeAspectFill
-
-            previewLayer = layer
-        } catch {
-            print(error.localizedDescription)
-        }
+        return frontalCamera
     }
 
     func startSession() {
@@ -84,9 +58,28 @@ final class CameraLayerRenderer: NSObject, AVCaptureVideoDataOutputSampleBufferD
     func stopSession() {
         session.stopRunning()
     }
+}
 
-    func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        print("what to do here?")
+extension CameraLayerRenderer {
+    private enum CaptureError: Error {
+        case deviceUnavailable
+        case setupFailed
     }
 }
 
+extension CameraLayerRenderer {
+    static func checkPermission(completion: @escaping((Bool) -> Void)) {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { (isGranted) in
+                completion(isGranted)
+            }
+        case .denied, .restricted:
+            completion(false)
+        case .authorized:
+            completion(true)
+        @unknown default:
+            fatalError("handle new AVCaptureDevice authorisation status")
+        }
+    }
+}
