@@ -12,6 +12,12 @@ final class UserNode: BasePersonNode {
 
     private let memberInfo: RoomMember
 
+    private lazy var streamNode: CameraCaptureNode = {
+        let node = CameraCaptureNode()
+
+        return node
+    }()
+
     init(info: RoomMember) {
         self.memberInfo = info
         super.init()
@@ -25,6 +31,9 @@ final class UserNode: BasePersonNode {
             addToCircle(node)
         }
         circleNodeName = UserNode.nodeName
+        addToCircle(streamNode)
+
+        streamNode.startVideoStream()
     }
 
     private func hearingZoneNode() -> SKNode {

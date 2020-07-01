@@ -37,10 +37,6 @@ final class RoomScene: SKScene {
 
     override func didMove(to view: SKView) {
         initializeBackground(imageName: backgroundImageName)
-
-        let captureNode = CameraCaptureNode(texture: nil, color: .black, size: CGSize(width: 200, height: 200))
-        captureNode.position = CGPoint(x: size.width / 2, y: 0)
-        addChild(captureNode)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

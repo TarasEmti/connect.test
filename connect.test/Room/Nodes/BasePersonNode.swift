@@ -10,7 +10,7 @@ import SpriteKit
 
 class BasePersonNode: SKNode {
 
-    private let cirleNode: SKNode
+    private let circleNode: SKNode
 
     override init() {
 
@@ -20,7 +20,7 @@ class BasePersonNode: SKNode {
         circle.name = UserNode.nodeName
         circle.strokeColor = UIColor.audioEnabledStroke
         circle.fillColor = UIColor.roomMember
-        cirleNode = circle
+        self.circleNode = circle
 
         super.init()
 
@@ -36,18 +36,18 @@ class BasePersonNode: SKNode {
     }
 
     var circleNodeName: String? {
-        get { cirleNode.name }
-        set { cirleNode.name = newValue }
+        get { circleNode.name }
+        set { circleNode.name = newValue }
     }
 
     func addToCircle(_ node: SKNode) {
-        cirleNode.addChild(node)
+        circleNode.addChild(node)
     }
 
     func buildNode(with image: UIImage) -> SKNode {
         let texture = SKTexture(image: image)
         let imageNode = SKSpriteNode(texture: texture)
-        imageNode.size = cirleNode.frame.size
+        imageNode.size = circleNode.frame.size
 
         return imageNode
     }

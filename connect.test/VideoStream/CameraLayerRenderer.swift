@@ -29,7 +29,6 @@ final class CameraLayerRenderer: NSObject, AVCaptureVideoDataOutputSampleBufferD
             let output = AVCaptureVideoDataOutput()
             output.alwaysDiscardsLateVideoFrames = true
             output.setSampleBufferDelegate(delegate, queue: captureQueue)
-            output.connection(with: .video)?.videoOrientation = .portrait
             if session.canAddOutput(output) {
                 session.addOutput(output)
             }
