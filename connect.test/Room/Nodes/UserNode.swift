@@ -33,7 +33,7 @@ final class UserNode: BasePersonNode {
         circleNodeName = UserNode.nodeName
         addToCircle(streamNode)
 
-        streamNode.startVideoStream()
+        //streamNode.startVideoStream()
     }
 
     private func hearingZoneNode() -> SKNode {

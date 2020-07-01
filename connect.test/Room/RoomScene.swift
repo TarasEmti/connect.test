@@ -28,6 +28,8 @@ final class RoomScene: SKScene {
 
         scaleMode = .aspectFit
         anchorPoint = CGPoint(x: 0.0, y: 0.5)
+
+        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
     }
 
     @available(*, unavailable)
