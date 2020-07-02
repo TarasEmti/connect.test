@@ -34,7 +34,7 @@ final class RoomViewController: UIViewController {
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.backgroundColor = self.view.backgroundColor
-        view.maximumZoomScale = 2
+        view.maximumZoomScale = 3
         view.delegate = self
         view.contentSize = RoomSceneLayoutConstants.sceneSize
 

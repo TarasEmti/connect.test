@@ -47,7 +47,9 @@ class BasePersonNode: SKNode {
     func buildNode(with image: UIImage) -> SKNode {
         let texture = SKTexture(image: image)
         let imageNode = SKSpriteNode(texture: texture)
-        imageNode.size = circleNode.frame.size
+        let size = CGSize(width: RoomSceneLayoutConstants.personNodeRadius*2,
+                          height: RoomSceneLayoutConstants.personNodeRadius*2)
+        imageNode.size = size
 
         return imageNode
     }
