@@ -84,3 +84,13 @@ extension UserNode: PersonNodeIdentifiable {
     static let nodeName = "User"
     var uid: String { return memberInfo.uid }
 }
+
+extension UserNode: VideoStreamNodeSupported {
+    func startVideoStream() {
+        streamNode.startVideoStream()
+    }
+
+    func stopVideoStream() {
+        streamNode.stopVideoStream()
+    }
+}

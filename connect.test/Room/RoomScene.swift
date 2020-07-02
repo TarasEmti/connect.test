@@ -177,6 +177,14 @@ extension RoomScene: RoomSceneInteractive {
             endNode.removeFromParent()
         }
     }
+
+    func startVideoStream() {
+        userNode.startVideoStream()
+    }
+
+    func stopVideoStream() {
+        userNode.stopVideoStream()
+    }
 }
 
 private extension CGPoint {

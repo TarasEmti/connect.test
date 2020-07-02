@@ -81,6 +81,21 @@ final class RoomViewController: UIViewController {
 
         presentRoom()
         view.addSubview(addMockUserButton)
+
+
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        CameraLayerRenderer.checkPermission { [weak self] (isGranted) in
+            guard let self = self, !isGranted else { return }
+
+            DispatchQueue.main.async {
+                self.roomScene.stopVideoStream()
+                self.showPermissionAlert()
+            }
+        }
     }
 
     // MARK: - Layout
@@ -117,6 +132,25 @@ final class RoomViewController: UIViewController {
         let newMember = OtherRoomMember(name: "Guest \(num)")
         roomGuests.append(newMember)
         roomScene.addPersonNode(info: newMember)
+    }
+
+    func showPermissionAlert() {
+        let alert = UIAlertController(title: "Warning", message: "Unable to start video stream. Please, check camera permission in settings", preferredStyle: .alert)
+
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) in
+            let urlString = UIApplication.openSettingsURLString
+            let url = URL(string: urlString)!
+
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
+        alert.addAction(settingsAction)
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+
+        present(alert, animated: true, completion: nil)
     }
 }
 

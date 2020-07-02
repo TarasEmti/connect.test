@@ -8,8 +8,11 @@
 
 import UIKit
 
-protocol RoomSceneInteractive {
+protocol RoomSceneInteractive: VideoStreamNodeSupported {
     var roomDelegate: RoomSceneDelegate? { get set }
+
+    func startVideoStream()
+    func stopVideoStream()
 
     func addUserNode(info: RoomMember)
     func addPersonNode(info: RoomMember)
