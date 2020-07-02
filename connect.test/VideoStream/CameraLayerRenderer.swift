@@ -10,6 +10,8 @@ import AVKit
 
 final class CameraLayerRenderer: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
 
+    static var isStreaming = false
+
     private let session = AVCaptureSession()
     private var captureDevice: AVCaptureDevice!
     private var captureQueue: DispatchQueue!
@@ -49,12 +51,14 @@ final class CameraLayerRenderer: NSObject, AVCaptureVideoDataOutputSampleBufferD
     }
 
     func startSession() {
+        CameraLayerRenderer.isStreaming = true
         captureQueue.async {
             self.session.startRunning()
         }
     }
 
     func stopSession() {
+        CameraLayerRenderer.isStreaming = false
         session.stopRunning()
     }
 }

@@ -62,6 +62,19 @@ final class RoomViewController: UIViewController {
         return button
     }()
 
+    private lazy var enableVideoStremButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "enable_video"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.tintColor = .white
+        button.clipsToBounds = true
+        button.imageEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
+        button.backgroundColor = UIColor.background.withAlphaComponent(0.7)
+        button.addTarget(self, action: #selector(switchStream), for: .touchUpInside)
+
+        return button
+    }()
+
     // MARK: - Properties
 
     private var roomScene = RoomSceneFactory().buildRoomScene(background: .office)
@@ -81,8 +94,7 @@ final class RoomViewController: UIViewController {
 
         presentRoom()
         view.addSubview(addMockUserButton)
-
-
+        view.addSubview(enableVideoStremButton)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -106,15 +118,24 @@ final class RoomViewController: UIViewController {
         scrollView.frame = view.bounds
         roomSceneView.frame = CGRect(origin: .zero, size: scrollView.contentSize)
 
-        let buttonSize = CGSize(width: 40, height: 40)
-        let offsetX: CGFloat = 16
-        let offsetY: CGFloat = 16 + view.safeAreaInsets.bottom
+        let buttonSize = CGSize(width: 50, height: 50)
+        let offset: CGFloat = 16
 
-        addMockUserButton.frame = CGRect(x: view.bounds.width - offsetX - buttonSize.width,
-                                         y: view.bounds.height - offsetY - buttonSize.height,
-                                         width: buttonSize.width,
-                                         height: buttonSize.height)
+        addMockUserButton.frame = CGRect(
+            x: view.bounds.width - offset - buttonSize.width,
+            y: view.bounds.height - offset - view.safeAreaInsets.bottom - buttonSize.height,
+            width: buttonSize.width,
+            height: buttonSize.height
+        )
         addMockUserButton.layer.cornerRadius = buttonSize.height / 2
+
+        enableVideoStremButton.frame = CGRect(
+            x: addMockUserButton.frame.minX,
+            y: addMockUserButton.frame.minY - buttonSize.height - offset,
+            width: buttonSize.width,
+            height: buttonSize.height
+        )
+        enableVideoStremButton.layer.cornerRadius = buttonSize.height / 2
     }
 
     // MARK: - Private methods
@@ -132,6 +153,14 @@ final class RoomViewController: UIViewController {
         let newMember = OtherRoomMember(name: "Guest \(num)")
         roomGuests.append(newMember)
         roomScene.addPersonNode(info: newMember)
+    }
+
+    @objc private func switchStream() {
+        if CameraLayerRenderer.isStreaming {
+            roomScene.stopVideoStream()
+        } else {
+            roomScene.startVideoStream()
+        }
     }
 
     func showPermissionAlert() {
