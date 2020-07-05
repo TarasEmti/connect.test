@@ -15,6 +15,7 @@ final class CameraLayerRenderer: NSObject, AVCaptureVideoDataOutputSampleBufferD
     private let session = AVCaptureSession()
     private var captureDevice: AVCaptureDevice!
     private var captureQueue: DispatchQueue!
+    private var isSessionReady = false
 
     func setupSession(with delegate: AVCaptureVideoDataOutputSampleBufferDelegate) throws {
         do {
@@ -34,6 +35,7 @@ final class CameraLayerRenderer: NSObject, AVCaptureVideoDataOutputSampleBufferD
             if session.canAddOutput(output) {
                 session.addOutput(output)
             }
+            isSessionReady = true
         } catch {
             throw error
         }
@@ -51,6 +53,10 @@ final class CameraLayerRenderer: NSObject, AVCaptureVideoDataOutputSampleBufferD
     }
 
     func startSession() {
+        guard isSessionReady else {
+            assertionFailure("Session is not ready")
+            return
+        }
         CameraLayerRenderer.isStreaming = true
         captureQueue.async {
             self.session.startRunning()
@@ -58,6 +64,10 @@ final class CameraLayerRenderer: NSObject, AVCaptureVideoDataOutputSampleBufferD
     }
 
     func stopSession() {
+        guard isSessionReady else {
+            assertionFailure("Session is not ready")
+            return
+        }
         CameraLayerRenderer.isStreaming = false
         session.stopRunning()
     }
