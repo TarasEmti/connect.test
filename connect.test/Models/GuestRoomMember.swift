@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct OtherRoomMember: RoomMember {
+struct GuestRoomMember: RoomMember {
 
     let name: String
     let icon: UIImage?

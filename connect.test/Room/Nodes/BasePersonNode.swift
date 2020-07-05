@@ -25,14 +25,6 @@ class BasePersonNode: SKNode {
         super.init()
 
         addChild(circle)
-        createPhysicsBody(radius: radius)
-    }
-
-    private func createPhysicsBody(radius: CGFloat) {
-        physicsBody = SKPhysicsBody(circleOfRadius: radius)
-        physicsBody?.collisionBitMask = 0x1 << 0
-        physicsBody?.categoryBitMask = 0x1 << 0
-        physicsBody?.affectedByGravity = false
     }
 
     var circleNodeName: String? {

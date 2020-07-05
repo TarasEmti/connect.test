@@ -16,13 +16,19 @@ final class RoomMemberNode: BasePersonNode {
         self.memberInfo = info
         super.init()
 
-        physicsBody?.isDynamic = false
-
         if let image = info.icon {
             let node = buildNode(with: image)
             addToCircle(node)
         }
         circleNodeName = RoomMemberNode.nodeName
+        createPhysicsBody(radius: RoomSceneLayoutConstants.personNodeRadius)
+    }
+
+    private func createPhysicsBody(radius: CGFloat) {
+        physicsBody = SKPhysicsBody(circleOfRadius: radius)
+        //physicsBody?.collisionBitMask = 0x1 << 0
+        //physicsBody?.categoryBitMask = 0x1 << 0
+        physicsBody?.affectedByGravity = false
     }
 }
 

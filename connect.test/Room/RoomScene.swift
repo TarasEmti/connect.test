@@ -7,12 +7,18 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 final class RoomScene: SKScene {
 
     weak var roomDelegate: RoomSceneDelegate?
 
     private let backgroundImageName: String
+
+    private lazy var graph = GKObstacleGraph(
+        obstacles: [],
+        bufferRadius: Float(RoomSceneLayoutConstants.personNodeRadius)
+    )
 
     private var userNode: UserNode!
 
@@ -28,8 +34,6 @@ final class RoomScene: SKScene {
 
         scaleMode = .aspectFit
         anchorPoint = CGPoint(x: 0.0, y: 0.5)
-
-        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
     }
 
     @available(*, unavailable)
@@ -75,13 +79,11 @@ final class RoomScene: SKScene {
         addChild(background)
     }
 
-    private func moveAction(of node: SKNode, speed: Double, to point: CGPoint) -> SKAction {
+    private func moveAction(from start: CGPoint, speed: Double, to end: CGPoint) -> SKAction {
 
-        // Option of realisation with node constant speed instead of constant time
-//        let distance = node.position.distance(to: point)
-//        let animationTime = TimeInterval(distance / CGFloat(speed))
-        let moveAction = SKAction.move(to: point, duration: 1.5)
-        moveAction.timingMode = .easeInEaseOut
+        let distance = start.distance(to: end)
+        let animationTime = TimeInterval(distance / CGFloat(speed))
+        let moveAction = SKAction.move(to: end, duration: animationTime)
 
         return moveAction
     }
@@ -146,6 +148,9 @@ extension RoomScene: RoomSceneInteractive {
         node.zPosition = NodePosition.roomMember.zPosition
         node.position = findSpawnLocation()
         addChild(node)
+
+        let obstacles = SKNode.obstacles(fromNodePhysicsBodies: [node])
+        graph.addObstacles(obstacles)
     }
 
     func removePersonNode(info: RoomMember) {
@@ -164,17 +169,46 @@ extension RoomScene: RoomSceneInteractive {
         return !userNode.hasActions()
     }
 
-    func move(to point: CGPoint) {
-        let action = moveAction(of: userNode, speed: userSpeed, to: point)
+    func connectNode(atPoint point: CGPoint, in graph: GKObstacleGraph<GKGraphNode2D>) -> GKGraphNode2D {
+        let vector = simd_float2(x: Float(point.x),
+                                 y: Float(point.y))
+        let node = GKGraphNode2D(point: vector)
+        graph.connectUsingObstacles(node: node)
 
-        let endNode = endPointNode()
-        endNode.position = point
-        addChild(endNode)
+        return node
+    }
+
+    func move(to point: CGPoint) {
+        let startNode = connectNode(atPoint: userNode.position, in: graph)
+        let endNode = connectNode(atPoint: point, in: graph)
+
+        defer { graph.remove([startNode, endNode])}
+
+        let path = graph.findPath(from: startNode, to: endNode) as! [GKGraphNode2D]
+
+        var moveActions: [SKAction] = []
+        var start: CGPoint = userNode.position
+        for point in path {
+            let end = CGPoint(x: CGFloat(point.position.x),
+                              y: CGFloat(point.position.y))
+            let move = moveAction(from: start,
+                                  speed: userSpeed,
+                                  to: end)
+            moveActions.append(move)
+            start = end
+        }
+
+        let endPoint = endPointNode()
+        endPoint.position = point
+        addChild(endPoint)
 
         userNode.imitatePulse()
 
-        userNode.run(action) {
-            endNode.removeFromParent()
+        let actionSequence = SKAction.sequence(moveActions)
+        actionSequence.timingMode = .easeIn
+
+        userNode.run(actionSequence) {
+            endPoint.removeFromParent()
         }
     }
 
@@ -188,6 +222,7 @@ extension RoomScene: RoomSceneInteractive {
 }
 
 private extension CGPoint {
+
     func distance(to point: CGPoint) -> CGFloat {
         let deltaX = point.x - self.x
         let deltaY = point.y - self.y

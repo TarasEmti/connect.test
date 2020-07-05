@@ -150,7 +150,7 @@ final class RoomViewController: UIViewController {
 
     @objc private func addRoomMember() {
         let num = roomGuests.count + 1
-        let newMember = OtherRoomMember(name: "Guest \(num)")
+        let newMember = GuestRoomMember(name: "Guest \(num)")
         roomGuests.append(newMember)
         roomScene.addPersonNode(info: newMember)
     }

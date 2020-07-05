@@ -17,7 +17,7 @@
 		76008F8724ACDA5300B858F5 /* RoomSceneLayoutConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8624ACDA5300B858F5 /* RoomSceneLayoutConstants.swift */; };
 		76008F8924ACDAC500B858F5 /* RoomSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8824ACDAC500B858F5 /* RoomSceneDelegate.swift */; };
 		76008F8C24ACEE3300B858F5 /* UserRoomMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8B24ACEE3300B858F5 /* UserRoomMember.swift */; };
-		76008F8E24ACEE8900B858F5 /* OtherRoomMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8D24ACEE8900B858F5 /* OtherRoomMember.swift */; };
+		76008F8E24ACEE8900B858F5 /* GuestRoomMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8D24ACEE8900B858F5 /* GuestRoomMember.swift */; };
 		76008F9024ACEEA900B858F5 /* RoomMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8F24ACEEA900B858F5 /* RoomMember.swift */; };
 		76008F9324ACEEEB00B858F5 /* CameraLayerRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F9224ACEEEB00B858F5 /* CameraLayerRenderer.swift */; };
 		76008F9524ACF7A700B858F5 /* BasePersonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F9424ACF7A700B858F5 /* BasePersonNode.swift */; };
@@ -59,7 +59,7 @@
 		76008F8624ACDA5300B858F5 /* RoomSceneLayoutConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneLayoutConstants.swift; sourceTree = "<group>"; };
 		76008F8824ACDAC500B858F5 /* RoomSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneDelegate.swift; sourceTree = "<group>"; };
 		76008F8B24ACEE3300B858F5 /* UserRoomMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRoomMember.swift; sourceTree = "<group>"; };
-		76008F8D24ACEE8900B858F5 /* OtherRoomMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherRoomMember.swift; sourceTree = "<group>"; };
+		76008F8D24ACEE8900B858F5 /* GuestRoomMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestRoomMember.swift; sourceTree = "<group>"; };
 		76008F8F24ACEEA900B858F5 /* RoomMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMember.swift; sourceTree = "<group>"; };
 		76008F9224ACEEEB00B858F5 /* CameraLayerRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraLayerRenderer.swift; sourceTree = "<group>"; };
 		76008F9424ACF7A700B858F5 /* BasePersonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePersonNode.swift; sourceTree = "<group>"; };
@@ -120,7 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				76008F8B24ACEE3300B858F5 /* UserRoomMember.swift */,
-				76008F8D24ACEE8900B858F5 /* OtherRoomMember.swift */,
+				76008F8D24ACEE8900B858F5 /* GuestRoomMember.swift */,
 				76008F8F24ACEEA900B858F5 /* RoomMember.swift */,
 			);
 			path = Models;
@@ -342,7 +342,7 @@
 			files = (
 				76008F7E24ABC07200B858F5 /* UIColor+Ext.swift in Sources */,
 				76008F9324ACEEEB00B858F5 /* CameraLayerRenderer.swift in Sources */,
-				76008F8E24ACEE8900B858F5 /* OtherRoomMember.swift in Sources */,
+				76008F8E24ACEE8900B858F5 /* GuestRoomMember.swift in Sources */,
 				76008F9524ACF7A700B858F5 /* BasePersonNode.swift in Sources */,
 				76008F7C24ABBF5600B858F5 /* RoomBackground.swift in Sources */,
 				76008F8524ACDA0B00B858F5 /* RoomMemberNode.swift in Sources */,
