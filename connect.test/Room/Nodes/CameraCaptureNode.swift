@@ -76,22 +76,24 @@ extension CameraCaptureNode: AVCaptureVideoDataOutputSampleBufferDelegate {
 }
 
 private extension UIImage {
-    var isPortrait:  Bool    { size.height > size.width }
     var isLandscape: Bool    { size.width > size.height }
-    var breadth:     CGFloat { min(size.width, size.height) }
-    var breadthSize: CGSize  { .init(width: breadth, height: breadth) }
-    var breadthRect: CGRect  { .init(origin: .zero, size: breadthSize) }
     var circleMasked: UIImage? {
-        guard let cgImage = cgImage?
-            .cropping(to: .init(origin: .init(x: isLandscape ? ((size.width-size.height)/2).rounded(.down) : 0,
-                                              y: isPortrait  ? ((size.height-size.width)/2).rounded(.down) : 0),
-                                size: breadthSize)) else { return nil }
-        let format = imageRendererFormat
-        format.opaque = false
-        return UIGraphicsImageRenderer(size: breadthSize, format: format).image { _ in
-            UIBezierPath(ovalIn: breadthRect).addClip()
-            UIImage(cgImage: cgImage, scale: 1, orientation: imageOrientation)
-            .draw(in: .init(origin: .zero, size: breadthSize))
+        let originPoint = CGPoint(
+            x: isLandscape ? ((size.width - size.height)/2) : 0,
+            y: !isLandscape ? ((size.height - size.width)/2) : 0
+        )
+        let circleSide = min(size.width, size.height)
+        let circleSize = CGSize(width: circleSide, height: circleSide)
+        let circleRect = CGRect(origin: .zero, size: circleSize)
+
+        guard let cgImage = cgImage?.cropping(to: CGRect(origin: originPoint,
+                                                         size: circleSize)) else { return nil }
+
+        let outputImage = UIGraphicsImageRenderer(size: circleSize).image { _ in
+            UIBezierPath(ovalIn: circleRect).addClip()
+            UIImage(cgImage: cgImage).draw(in: circleRect)
         }
+
+        return outputImage
     }
 }

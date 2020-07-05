@@ -26,8 +26,6 @@ final class RoomMemberNode: BasePersonNode {
 
     private func createPhysicsBody(radius: CGFloat) {
         physicsBody = SKPhysicsBody(circleOfRadius: radius)
-        //physicsBody?.collisionBitMask = 0x1 << 0
-        //physicsBody?.categoryBitMask = 0x1 << 0
         physicsBody?.affectedByGravity = false
     }
 }
