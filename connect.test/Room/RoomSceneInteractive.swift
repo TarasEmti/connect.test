@@ -15,9 +15,9 @@ protocol RoomSceneInteractive: VideoStreamNodeSupported {
     func stopVideoStream()
 
     func addUserNode(info: RoomMember)
-    func addPersonNode(info: RoomMember)
-    func removePersonNode(info: RoomMember)
-    
-    func canMove(to point: CGPoint) -> Bool
-    func move(to point: CGPoint)
+    func addGuestNode(info: RoomMember)
+    func removeGuestNode(info: RoomMember)
+
+    // Returns false if path is unavailable
+    func moveUser(to point: CGPoint) -> Bool
 }

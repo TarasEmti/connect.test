@@ -11,6 +11,17 @@ import GameplayKit
 
 final class RoomScene: SKScene {
 
+    private enum NodePosition: Int {
+        case background = -1
+        case endNode
+        case user
+        case roomMember
+
+        var zPosition: CGFloat {
+            return CGFloat(self.rawValue)
+        }
+    }
+
     weak var roomDelegate: RoomSceneDelegate?
 
     private let backgroundImageName: String
@@ -21,12 +32,6 @@ final class RoomScene: SKScene {
     )
 
     private var userNode: UserNode!
-
-    private var userSpeed: Double {
-        // Lets suppose we use movement speed equals to
-        // half scene height for 2 seconds
-        return Double(size.height) / 4
-    }
 
     init(backgroundImageName: String) {
         self.backgroundImageName = backgroundImageName
@@ -56,13 +61,13 @@ final class RoomScene: SKScene {
                     
                     return
                 } else if node.name == RoomMemberNode.nodeName {
-                    roomDelegate?.showPersonCard(uid: (node.parent as! PersonNodeIdentifiable).uid)
+                    roomDelegate?.showGuestCard(uid: (node.parent as! PersonNodeIdentifiable).uid)
 
                     return
                 }
             }
-            if canMove(to: touchLocation) {
-                move(to: touchLocation)
+            if !moveUser(to: touchLocation) {
+                roomDelegate?.badUserPath()
             }
         }
     }
@@ -79,26 +84,10 @@ final class RoomScene: SKScene {
         addChild(background)
     }
 
-    private func moveAction(from start: CGPoint, speed: Double, to end: CGPoint) -> SKAction {
-
-        let distance = start.distance(to: end)
-        let animationTime = TimeInterval(distance / CGFloat(speed))
-        let moveAction = SKAction.move(to: end, duration: animationTime)
-
-        return moveAction
-    }
-
-    private func endPointNode() -> SKNode {
-        let node = SKShapeNode(circleOfRadius: RoomSceneLayoutConstants.personNodeRadius)
-        node.fillColor = .clear
-        node.lineWidth = 3.0
-        node.strokeColor = .white
+    private func endPointNode(at point: CGPoint) -> SKNode {
+        let node = EndpointNode()
+        node.position = point
         node.zPosition = NodePosition.endNode.zPosition
-
-        let centreDot = SKShapeNode(circleOfRadius: RoomSceneLayoutConstants.personNodeRadius / 10)
-        centreDot.fillColor = .white
-
-        node.addChild(centreDot)
 
         return node
     }
@@ -118,22 +107,55 @@ final class RoomScene: SKScene {
 
         return CGPoint(x: CGFloat(pointX), y: CGFloat(pointY))
     }
-}
 
-extension RoomScene {
-    private enum NodePosition: Int {
-        case background = -1
-        case endNode
-        case user
-        case roomMember
+    private func connectNode(atPoint point: CGPoint, in graph: GKObstacleGraph<GKGraphNode2D>) -> GKGraphNode2D {
+        let vector = simd_float2(x: Float(point.x),
+                                 y: Float(point.y))
+        let node = GKGraphNode2D(point: vector)
+        graph.connectUsingObstacles(node: node)
 
-        var zPosition: CGFloat {
-            return CGFloat(self.rawValue)
+        return node
+    }
+
+    private func canFindPathForUser(to point: CGPoint) -> [GKGraphNode2D]? {
+        guard !userNode.hasActions() else {
+            return nil
         }
+
+        let path = findPath(from: userNode.position, to: point, using: graph)
+
+        return path
+    }
+
+    private func findPath(from: CGPoint, to: CGPoint, using graph: GKObstacleGraph<GKGraphNode2D>) -> [GKGraphNode2D]? {
+
+        let startNode = connectNode(atPoint: from, in: graph)
+        let endNode = connectNode(atPoint: to, in: graph)
+        defer { graph.remove([startNode, endNode])}
+
+        let path = graph.findPath(from: startNode, to: endNode) as! [GKGraphNode2D]
+
+        return path.isEmpty ? nil : path
+    }
+
+    private func buildUserMoveSequence(for path: [GKGraphNode2D]) -> [SKAction] {
+
+        var moveActions: [SKAction] = []
+        var start: CGPoint = userNode.position
+        for point in path {
+            let end = CGPoint(x: CGFloat(point.position.x),
+                              y: CGFloat(point.position.y))
+            let move = SKAction.move(from: start, to: end, with: userNode.moveSpeed)
+            moveActions.append(move)
+            start = end
+        }
+
+        return moveActions
     }
 }
 
 extension RoomScene: RoomSceneInteractive {
+    
     func addUserNode(info: RoomMember) {
         let node = UserNode(info: info)
         node.position = CGPoint(x: RoomSceneLayoutConstants.personNodeRadius * 6,
@@ -143,7 +165,7 @@ extension RoomScene: RoomSceneInteractive {
         addChild(node)
     }
 
-    func addPersonNode(info: RoomMember) {
+    func addGuestNode(info: RoomMember) {
         let node = RoomMemberNode(info: info)
         node.zPosition = NodePosition.roomMember.zPosition
         node.position = findSpawnLocation()
@@ -153,7 +175,7 @@ extension RoomScene: RoomSceneInteractive {
         graph.addObstacles(obstacles)
     }
 
-    func removePersonNode(info: RoomMember) {
+    func removeGuestNode(info: RoomMember) {
         enumerateChildNodes(withName: RoomMemberNode.nodeName) { (node, pointer) in
             guard
                 let idNode = node as? PersonNodeIdentifiable,
@@ -165,51 +187,25 @@ extension RoomScene: RoomSceneInteractive {
         }
     }
 
-    func canMove(to point: CGPoint) -> Bool {
-        return !userNode.hasActions()
-    }
+    func moveUser(to point: CGPoint) -> Bool {
 
-    func connectNode(atPoint point: CGPoint, in graph: GKObstacleGraph<GKGraphNode2D>) -> GKGraphNode2D {
-        let vector = simd_float2(x: Float(point.x),
-                                 y: Float(point.y))
-        let node = GKGraphNode2D(point: vector)
-        graph.connectUsingObstacles(node: node)
-
-        return node
-    }
-
-    func move(to point: CGPoint) {
-        let startNode = connectNode(atPoint: userNode.position, in: graph)
-        let endNode = connectNode(atPoint: point, in: graph)
-
-        defer { graph.remove([startNode, endNode])}
-
-        let path = graph.findPath(from: startNode, to: endNode) as! [GKGraphNode2D]
-
-        var moveActions: [SKAction] = []
-        var start: CGPoint = userNode.position
-        for point in path {
-            let end = CGPoint(x: CGFloat(point.position.x),
-                              y: CGFloat(point.position.y))
-            let move = moveAction(from: start,
-                                  speed: userSpeed,
-                                  to: end)
-            moveActions.append(move)
-            start = end
+        guard let path = canFindPathForUser(to: point) else {
+            return false
         }
 
-        let endPoint = endPointNode()
-        endPoint.position = point
+        let endPoint = endPointNode(at: point)
         addChild(endPoint)
 
-        userNode.imitatePulse()
-
-        let actionSequence = SKAction.sequence(moveActions)
-        actionSequence.timingMode = .easeIn
+        let moves = buildUserMoveSequence(for: path)
+        let actionSequence = SKAction.sequence(moves)
+        actionSequence.timingMode = .easeInEaseOut
 
         userNode.run(actionSequence) {
             endPoint.removeFromParent()
         }
+        userNode.imitatePulse()
+
+        return true
     }
 
     func startVideoStream() {
@@ -229,5 +225,16 @@ private extension CGPoint {
         let distance = sqrt(deltaX * deltaX + deltaY * deltaY)
 
         return CGFloat(distance)
+    }
+}
+
+private extension SKAction {
+
+    static func move(from start: CGPoint, to end: CGPoint, with speed: Double) -> SKAction {
+        let distance = start.distance(to: end)
+        let animationTime = TimeInterval(distance / CGFloat(speed))
+        let moveAction = SKAction.move(to: end, duration: animationTime)
+
+        return moveAction
     }
 }

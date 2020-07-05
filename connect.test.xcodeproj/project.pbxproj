@@ -29,6 +29,8 @@
 		762D9D5F24AA7C7400EF9D8E /* connect_testTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762D9D5E24AA7C7400EF9D8E /* connect_testTests.swift */; };
 		762D9D6A24AA7C7400EF9D8E /* connect_testUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762D9D6924AA7C7400EF9D8E /* connect_testUITests.swift */; };
 		768EDF8624AA8B3B00CAE740 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768EDF8524AA8B3B00CAE740 /* RoomViewController.swift */; };
+		76A05C7F24B263A7009C52E2 /* EndpointNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A05C7E24B263A7009C52E2 /* EndpointNode.swift */; };
+		76A05C8124B2648E009C52E2 /* NodeMovable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A05C8024B2648E009C52E2 /* NodeMovable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,8 @@
 		762D9D6924AA7C7400EF9D8E /* connect_testUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = connect_testUITests.swift; sourceTree = "<group>"; };
 		762D9D6B24AA7C7400EF9D8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		768EDF8524AA8B3B00CAE740 /* RoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
+		76A05C7E24B263A7009C52E2 /* EndpointNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointNode.swift; sourceTree = "<group>"; };
+		76A05C8024B2648E009C52E2 /* NodeMovable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeMovable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,8 @@
 				76008F8424ACDA0B00B858F5 /* RoomMemberNode.swift */,
 				76008F9424ACF7A700B858F5 /* BasePersonNode.swift */,
 				76008F9624AD09D600B858F5 /* CameraCaptureNode.swift */,
+				76A05C7E24B263A7009C52E2 /* EndpointNode.swift */,
+				76A05C8024B2648E009C52E2 /* NodeMovable.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -346,6 +352,7 @@
 				76008F9524ACF7A700B858F5 /* BasePersonNode.swift in Sources */,
 				76008F7C24ABBF5600B858F5 /* RoomBackground.swift in Sources */,
 				76008F8524ACDA0B00B858F5 /* RoomMemberNode.swift in Sources */,
+				76A05C7F24B263A7009C52E2 /* EndpointNode.swift in Sources */,
 				76008F8C24ACEE3300B858F5 /* UserRoomMember.swift in Sources */,
 				76008F9724AD09D600B858F5 /* CameraCaptureNode.swift in Sources */,
 				762D9D4824AA7C7100EF9D8E /* AppDelegate.swift in Sources */,
@@ -355,6 +362,7 @@
 				76008F8724ACDA5300B858F5 /* RoomSceneLayoutConstants.swift in Sources */,
 				762D9D4A24AA7C7100EF9D8E /* SceneDelegate.swift in Sources */,
 				76008F8924ACDAC500B858F5 /* RoomSceneDelegate.swift in Sources */,
+				76A05C8124B2648E009C52E2 /* NodeMovable.swift in Sources */,
 				76008F8324ACD9C400B858F5 /* PersonNodeIdentifiable.swift in Sources */,
 				76008F8124ACD9AE00B858F5 /* UserNode.swift in Sources */,
 				768EDF8624AA8B3B00CAE740 /* RoomViewController.swift in Sources */,

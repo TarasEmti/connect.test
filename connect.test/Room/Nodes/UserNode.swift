@@ -8,9 +8,11 @@
 
 import SpriteKit
 
-final class UserNode: BasePersonNode {
+final class UserNode: BasePersonNode, NodeMovable {
 
     private let memberInfo: RoomMember
+
+    let moveSpeed: Double = 400
 
     private lazy var streamNode: CameraCaptureNode = {
         let node = CameraCaptureNode()

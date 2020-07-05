@@ -152,7 +152,7 @@ final class RoomViewController: UIViewController {
         let num = roomGuests.count + 1
         let newMember = GuestRoomMember(name: "Guest \(num)")
         roomGuests.append(newMember)
-        roomScene.addPersonNode(info: newMember)
+        roomScene.addGuestNode(info: newMember)
     }
 
     @objc private func switchStream() {
@@ -184,21 +184,29 @@ final class RoomViewController: UIViewController {
 }
 
 extension RoomViewController: UIScrollViewDelegate {
+
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return roomSceneView
     }
 }
 
 extension RoomViewController: RoomSceneDelegate {
+
     func showUserCard() {
         print("Calling User Info")
     }
 
-    func showPersonCard(uid: String) {
+    func showGuestCard(uid: String) {
         guard let guest = roomGuests.first(where: {$0.uid == uid}) else {
             assertionFailure("No Guest with ID = \(uid)")
             return
         }
         print("Guest Info:\nName: \(guest.name)\nuid: \(guest.uid)")
+    }
+
+    func badUserPath() {
+        let feedback = UIImpactFeedbackGenerator(style: .light)
+        feedback.prepare()
+        feedback.impactOccurred()
     }
 }

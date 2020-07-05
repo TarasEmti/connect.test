@@ -8,5 +8,6 @@
 
 protocol RoomSceneDelegate: class {
     func showUserCard()
-    func showPersonCard(uid: String)
+    func showGuestCard(uid: String)
+    func badUserPath()
 }
