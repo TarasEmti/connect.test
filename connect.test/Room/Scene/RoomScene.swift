@@ -74,6 +74,7 @@ final class RoomScene: SKScene {
 
     private func initializeBackground(imageName: String) {
         let background = SKSpriteNode(imageNamed: imageName)
+        background.anchorPoint = self.anchorPoint
         background.position = .zero
         background.zPosition = NodePosition.background.zPosition
 

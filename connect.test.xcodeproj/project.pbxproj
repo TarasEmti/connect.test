@@ -26,11 +26,15 @@
 		762D9D4A24AA7C7100EF9D8E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762D9D4924AA7C7100EF9D8E /* SceneDelegate.swift */; };
 		762D9D5124AA7C7400EF9D8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 762D9D5024AA7C7400EF9D8E /* Assets.xcassets */; };
 		762D9D5424AA7C7400EF9D8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 762D9D5224AA7C7400EF9D8E /* LaunchScreen.storyboard */; };
-		762D9D5F24AA7C7400EF9D8E /* connect_testTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762D9D5E24AA7C7400EF9D8E /* connect_testTests.swift */; };
 		762D9D6A24AA7C7400EF9D8E /* connect_testUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762D9D6924AA7C7400EF9D8E /* connect_testUITests.swift */; };
 		768EDF8624AA8B3B00CAE740 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768EDF8524AA8B3B00CAE740 /* RoomViewController.swift */; };
 		76A05C7F24B263A7009C52E2 /* EndpointNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A05C7E24B263A7009C52E2 /* EndpointNode.swift */; };
 		76A05C8124B2648E009C52E2 /* NodeMovable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A05C8024B2648E009C52E2 /* NodeMovable.swift */; };
+		76EAC0CA24B31FA2002A0F23 /* RoomBackgroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EAC0C924B31FA2002A0F23 /* RoomBackgroundTests.swift */; };
+		76EAC0CB24B32002002A0F23 /* RoomBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F7B24ABBF5600B858F5 /* RoomBackground.swift */; };
+		76EAC0CD24B32323002A0F23 /* GuestRoomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EAC0CC24B32323002A0F23 /* GuestRoomTests.swift */; };
+		76EAC0CE24B3232A002A0F23 /* GuestRoomMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8D24ACEE8900B858F5 /* GuestRoomMember.swift */; };
+		76EAC0CF24B323F1002A0F23 /* RoomMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76008F8F24ACEEA900B858F5 /* RoomMember.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,7 +77,6 @@
 		762D9D5324AA7C7400EF9D8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		762D9D5524AA7C7400EF9D8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		762D9D5A24AA7C7400EF9D8E /* connect.testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = connect.testTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		762D9D5E24AA7C7400EF9D8E /* connect_testTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = connect_testTests.swift; sourceTree = "<group>"; };
 		762D9D6024AA7C7400EF9D8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		762D9D6524AA7C7400EF9D8E /* connect.testUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = connect.testUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		762D9D6924AA7C7400EF9D8E /* connect_testUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = connect_testUITests.swift; sourceTree = "<group>"; };
@@ -81,6 +84,8 @@
 		768EDF8524AA8B3B00CAE740 /* RoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
 		76A05C7E24B263A7009C52E2 /* EndpointNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointNode.swift; sourceTree = "<group>"; };
 		76A05C8024B2648E009C52E2 /* NodeMovable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeMovable.swift; sourceTree = "<group>"; };
+		76EAC0C924B31FA2002A0F23 /* RoomBackgroundTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomBackgroundTests.swift; sourceTree = "<group>"; };
+		76EAC0CC24B32323002A0F23 /* GuestRoomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestRoomTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,7 +196,8 @@
 		762D9D5D24AA7C7400EF9D8E /* connect.testTests */ = {
 			isa = PBXGroup;
 			children = (
-				762D9D5E24AA7C7400EF9D8E /* connect_testTests.swift */,
+				76EAC0CC24B32323002A0F23 /* GuestRoomTests.swift */,
+				76EAC0C924B31FA2002A0F23 /* RoomBackgroundTests.swift */,
 				762D9D6024AA7C7400EF9D8E /* Info.plist */,
 			);
 			path = connect.testTests;
@@ -381,7 +387,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				762D9D5F24AA7C7400EF9D8E /* connect_testTests.swift in Sources */,
+				76EAC0CB24B32002002A0F23 /* RoomBackground.swift in Sources */,
+				76EAC0CA24B31FA2002A0F23 /* RoomBackgroundTests.swift in Sources */,
+				76EAC0CF24B323F1002A0F23 /* RoomMember.swift in Sources */,
+				76EAC0CE24B3232A002A0F23 /* GuestRoomMember.swift in Sources */,
+				76EAC0CD24B32323002A0F23 /* GuestRoomTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Тарас Минин. All rights reserved.
 //
 
-enum RoomBackground {
+enum RoomBackground: CaseIterable {
     case office
 
     var imageName: String {
