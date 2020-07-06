@@ -45,6 +45,7 @@ final class CameraCaptureNode: SKSpriteNode, VideoStreamNodeSupported {
 }
 
 extension CameraCaptureNode: AVCaptureVideoDataOutputSampleBufferDelegate {
+    
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
 
         let imageBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
@@ -76,7 +77,8 @@ extension CameraCaptureNode: AVCaptureVideoDataOutputSampleBufferDelegate {
 }
 
 private extension UIImage {
-    var isLandscape: Bool    { size.width > size.height }
+
+    var isLandscape: Bool { size.width > size.height }
     var circleMasked: UIImage? {
         let originPoint = CGPoint(
             x: isLandscape ? ((size.width - size.height)/2) : 0,

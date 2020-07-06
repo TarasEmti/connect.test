@@ -24,7 +24,7 @@ final class RoomScene: SKScene {
 
     weak var roomDelegate: RoomSceneDelegate?
 
-    private let backgroundImageName: String
+    private let background: RoomBackground
 
     private lazy var graph = GKObstacleGraph(
         obstacles: [],
@@ -33,8 +33,8 @@ final class RoomScene: SKScene {
 
     private var userNode: UserNode!
 
-    init(backgroundImageName: String) {
-        self.backgroundImageName = backgroundImageName
+    init(background: RoomBackground) {
+        self.background = background
         super.init(size: RoomSceneLayoutConstants.sceneSize)
 
         scaleMode = .aspectFit
@@ -47,7 +47,7 @@ final class RoomScene: SKScene {
     }
 
     override func didMove(to view: SKView) {
-        initializeBackground(imageName: backgroundImageName)
+        initializeBackground(imageName: background.imageName)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

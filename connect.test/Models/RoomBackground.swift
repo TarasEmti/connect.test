@@ -6,6 +6,12 @@
 //  Copyright © 2020 Тарас Минин. All rights reserved.
 //
 
-enum RoomBackground: String {
-    case office = "office_cover"
+enum RoomBackground {
+    case office
+
+    var imageName: String {
+        switch self {
+        case .office: return "office_cover"
+        }
+    }
 }

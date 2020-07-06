@@ -11,7 +11,7 @@ import SpriteKit
 
 final class RoomSceneFactory {
     func buildRoomScene(background: RoomBackground) -> RoomSceneInteractive {
-        let scene = RoomScene(backgroundImageName: background.rawValue)
+        let scene = RoomScene(background: background)
 
         return scene
     }

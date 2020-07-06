@@ -128,6 +128,7 @@
 				76008F8B24ACEE3300B858F5 /* UserRoomMember.swift */,
 				76008F8D24ACEE8900B858F5 /* GuestRoomMember.swift */,
 				76008F8F24ACEEA900B858F5 /* RoomMember.swift */,
+				76008F7B24ABBF5600B858F5 /* RoomBackground.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -138,6 +139,17 @@
 				76008F9224ACEEEB00B858F5 /* CameraLayerRenderer.swift */,
 			);
 			path = VideoStream;
+			sourceTree = "<group>";
+		};
+		76205CCB24B3140800266236 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				76008F7724ABBB1B00B858F5 /* RoomScene.swift */,
+				76008F7924ABBB4B00B858F5 /* RoomSceneInteractive.swift */,
+				76008F8824ACDAC500B858F5 /* RoomSceneDelegate.swift */,
+				76008F8624ACDA5300B858F5 /* RoomSceneLayoutConstants.swift */,
+			);
+			path = Scene;
 			sourceTree = "<group>";
 		};
 		762D9D3B24AA7C7100EF9D8E = {
@@ -205,13 +217,9 @@
 		768EDF8824AA8B6A00CAE740 /* Room */ = {
 			isa = PBXGroup;
 			children = (
+				76205CCB24B3140800266236 /* Scene */,
 				76008F7F24ACD98B00B858F5 /* Nodes */,
 				768EDF8524AA8B3B00CAE740 /* RoomViewController.swift */,
-				76008F7724ABBB1B00B858F5 /* RoomScene.swift */,
-				76008F7924ABBB4B00B858F5 /* RoomSceneInteractive.swift */,
-				76008F7B24ABBF5600B858F5 /* RoomBackground.swift */,
-				76008F8624ACDA5300B858F5 /* RoomSceneLayoutConstants.swift */,
-				76008F8824ACDAC500B858F5 /* RoomSceneDelegate.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
