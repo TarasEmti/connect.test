@@ -28,8 +28,11 @@ class connect_testUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let addRoomMemberButton = app.buttons["add room member"]
+        XCTAssert(addRoomMemberButton.exists, "Add guest button shuld be on screen")
+
+        let enableVideoButton = app.buttons["enable video"]
+        XCTAssert(enableVideoButton.exists, "Add guest button shuld be on screen")
     }
 
     func testLaunchPerformance() throws {
